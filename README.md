@@ -12,3 +12,5 @@
     - need to drain old nodes, terminate old CFN template
     - "Updating AMI" in CFN template causes ungraceful termination of applications.
 - Fargate profile
+- Create KMS key for secrets encryption
+- 
