@@ -1,5 +1,6 @@
 # eks-aws-infra
 
+Follow instructions here: https://aws-quickstart.github.io/quickstart-amazon-eks/
 
 ## Requirements
 
@@ -13,4 +14,8 @@
     - "Updating AMI" in CFN template causes ungraceful termination of applications.
 - Fargate profile
 - Create KMS key for secrets encryption
-- 
+- integrate synk: https://github.com/aws-quickstart/quickstart-eks-snyk/
+- determine monitoring strategy
+    - newrelic
+    - prometheus + grafana
+

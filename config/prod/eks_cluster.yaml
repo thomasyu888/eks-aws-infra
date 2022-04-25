@@ -1,0 +1,27 @@
+
+vpcid: vpc-0e9b80dc470a797d5 #sandcastle
+private_subnets: [subnet-0b8a92e98f330a943, subnet-025c297e427e44daf, subnet-0bb4c519a4cbffcca]
+public_subnets: [subnet-0f19d4c62f9ab0f2c, subnet-031359c53fce9b312, subnet-02f2acd15e5be53cd]
+sshkey: tomnew
+clustername: data_and_tooling
+fargate_profile: 
+security_group: sg-086ea4a701379ead4
+
+nodegroup_instance_type: t3.medium
+number_of_nodes: 3
+max_number_of_nodes: 3
+instance_family: standard
+node_group_type: managed
+node_group_os: "Amazon Linux 2"
+
+cluster_ip: IPv4
+cluster_endpoint_access: private
+api_server_logging: enabled
+audit_logging: enabled
+authenticator_logging: enabled
+controller_managed_logging: enabled
+scheduler_logging: enabled
+
+# Allowed_external_access_CIDR: IPv4
+eks_version: 1.21
+cluster_service_role: 
