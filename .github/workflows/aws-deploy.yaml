@@ -1,0 +1,48 @@
+name: aws-deploy
+
+on: push
+
+jobs:
+  pre-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+      - uses: pre-commit/action@v2.0.0
+
+  sceptre-deploy-main:
+    name: Deploy trunk using sceptre
+    runs-on: ubuntu-latest
+    needs: [pre-commit]
+    if: github.ref_name == 'main' && github.ref_type != 'tag'
+
+    strategy:
+      matrix:
+        job-environment:
+          # - develop
+          - prod
+
+        # include:
+        #   - job-environment: develop
+        #     sceptre-environment: develop
+
+          - job-environment: prod
+            sceptre-environment: prod
+
+    environment: ${{ matrix.job-environment }}
+
+    steps:
+      - name: Setup code, pipenv, aws
+        uses: Sage-Bionetworks/action-pipenv-aws-setup@v1
+        with:
+          aws_access_key_id: ${{ secrets.CI_USER_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.CI_USER_SECRET_ACCESS_KEY }}
+          role_to_assume: ${{ secrets.CI_ROLE_TO_ASSUME }}
+
+      - name: Create directory for remote sceptre templates
+        run: mkdir -p templates/remote/
+
+      - name: Deploy sceptre stacks
+        run: pipenv run sceptre --var launch ${{ matrix.sceptre-environment }} --yes
